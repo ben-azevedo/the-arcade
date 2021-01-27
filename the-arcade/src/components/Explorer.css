@@ -1,23 +1,23 @@
 :root {
-  --pixel-size: 4;
+  --pixel-size: 4px;
   --grid-cell: calc( var(--pixel-size) * 16);
   --bg: black;
 }
-/* @media( min-width: 700px ) {
+@media( max-width: 700px ) {
   :root {
      --pixel-size: 3px;
   }
 }
 @media( min-width: 1000px ) {
   :root {
-     --pixel-size: 4px;
+     --pixel-size: 5px;
   }
-} */
-/* @media( min-width: 1000px ) {
+}
+@media( min-width: 1200px ) {
   :root {
      --pixel-size: 5px;
   }
-} */
+}
 
 html, body {
   height: 100%;
@@ -39,7 +39,7 @@ body {
   width: calc(var(--pixel-size) * 160);
   height: calc(var(--pixel-size) * 144);
   outline: var(--pixel-size) solid #fff;
-  z-index:1; 
+  z-index: 1; 
   position:relative;
 }
 
@@ -56,7 +56,7 @@ body {
   background-image: url("../images/practiceMap.png");
   background-size: 100%;
   width: calc(13 * var(--grid-cell));
-  height: calc(10 * var(--grid-cell));
+  height: calc(37.7 * var(--grid-cell));
   position: relative;
 }
 

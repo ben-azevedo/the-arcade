@@ -1,10 +1,10 @@
 :root {
-  --pixel-size: 4;
+  --ixel-size: 4;
 }
 
 .Character {
-  width: calc(32px * var(--pixel-size));
-  height: calc(32px * var(--pixel-size));
+  width: calc(32px * var(--ixel-size));
+  height: calc(32px * var(--ixel-size));
   overflow: hidden;
   position: relative;
   margin: 4em auto;
@@ -12,14 +12,14 @@
 
 .Character_spritesheet {
   animation: moveSpritesheet 1s steps(4) infinite;
-  width: calc(128px * var(--pixel-size));
+  width: calc(128px * var(--ixel-size));
   position: absolute;
   
 }
 .Character_shadow {
   position: absolute;
-  width: calc(32px * var(--pixel-size));
-  height: calc(32px * var(--pixel-size));
+  width: calc(32px * var(--ixel-size));
+  height: calc(32px * var(--ixel-size));
 }
 
 .pixelart {
@@ -27,13 +27,13 @@
 }
 
 .face-right {
-  top: calc(-32px * var(--pixel-size));
+  top: calc(-32px * var(--ixel-size));
 }
 .face-up {
-  top: calc(-64px * var(--pixel-size));
+  top: calc(-64px * var(--ixel-size));
 }
 .face-left {
-  top: calc(-96px * var(--pixel-size));
+  top: calc(-96px * var(--ixel-size));
 }
 
 

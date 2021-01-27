@@ -1,22 +1,18 @@
 import shadow from "../images/shadow.png";
 import "./Avatar.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 function Avatar(props) {
-  const [dir, setDir] = useState("Character_spritesheet pixelart face-down")
-
   const handleCharacterChoice = () => {
     props.setAvatar(props.avatar);
   }
-  useEffect(() => {
-
-  }, [])
 
   return (
     <div>
       <div onClick={handleCharacterChoice} class="Character">
         <img class="Character_shadow pixelart" src={shadow}/>
-        <img class="Character_spritesheet pixelart face-down" src={props.avatar}/>
+        <img class={`Character_spritesheet pixelart face-${props.dir}`} src={props.avatar}/>
       </div>
     </div>
   );

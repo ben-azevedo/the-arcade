@@ -1,7 +1,138 @@
 import "./Explorer.css";
+import { useState } from "react";
 
 function Explorer(props) {
   console.log(props.avatar);
+  // const [x, setX] = useState(88);
+  // const [y, setY] = useState(297);
+
+  //start in the middle of the map
+  let pixelSize = 4;
+  const camera_left = pixelSize * 48;
+  const camera_top = pixelSize * 42;
+  let x = 88;
+  let y = 297;
+  let held_directions = []; //State of which arrow keys we are holding down
+  let speed = 1; //How fast the character moves in pixels per frame
+  let held_direction = held_directions[0];
+  let mapTransform = "translate3d(0px,0,0)";
+  let charTransform = "transform: translate3d(0px,0,0)";
+
+  const placeCharacter = () => {
+    pixelSize = parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--pixel-size"
+      )
+    );
+    held_direction = held_directions[0];
+    if (held_direction) {
+      if (held_direction === directions.right) {
+        x += speed;
+      }
+      if (held_direction === directions.left) {
+        x -= speed;
+      }
+      if (held_direction === directions.down) {
+        y += speed;
+      }
+      if (held_direction === directions.up) {
+        y -= speed;
+      }
+    }
+
+    var leftLimit = 44;
+    var rightLimit = 132;
+    var topLimit = 17;
+    var bottomLimit = 300;
+    if (x < leftLimit) {
+      x = leftLimit;
+    }
+    if (x > rightLimit) {
+      x = rightLimit;
+    }
+    if (y < topLimit) {
+      y = topLimit;
+    }
+    if (y > bottomLimit) {
+      y = bottomLimit;
+    }
+    if (x === 88 && y === 60) {
+      doTheThing
+    }
+    console.log(`x:${x} y:${y}`)
+    mapTransform = `translate3d( ${-x * pixelSize + camera_left}px, ${-y * pixelSize + camera_top
+    }px, 0 )`;
+    charTransform = `translate3d( ${x * pixelSize}px, ${y * pixelSize}px, 0 )`;
+  };
+
+  //Set up the game loop
+  const step = () => {
+    placeCharacter();
+    window.requestAnimationFrame(() => {
+      step();
+    });
+  };
+  step(); //kick off the first step!
+
+  const directions = {
+    up: "up",
+    down: "down",
+    left: "left",
+    right: "right",
+  };
+  const keys = {
+    38: directions.up,
+    37: directions.left,
+    39: directions.right,
+    40: directions.down,
+  };
+
+  document.addEventListener("keydown", (e) => {
+    var dir = keys[e.which];
+    if (dir && held_directions.indexOf(dir) === -1) {
+      held_directions.unshift(dir);
+    }
+  });
+
+  document.addEventListener("keyup", (e) => {
+    var dir = keys[e.which];
+    var index = held_directions.indexOf(dir);
+    if (index > -1) {
+      held_directions.splice(index, 1);
+    }
+  });
+
+  var isPressed = false;
+  const removePressedAll = () => {
+    document.querySelectorAll(".dpad-button").forEach((d) => {
+      d.classList.remove("pressed");
+    });
+  };
+  document.body.addEventListener("mousedown", () => {
+    console.log(`mouse is down`);
+    isPressed = true;
+  });
+  document.body.addEventListener("mouseup", () => {
+    console.log("mouse is up");
+    isPressed = false;
+    held_directions = [];
+    removePressedAll();
+  });
+
+  const handleDpadPress = (direction, click) => {
+    if (click) {
+      isPressed = true;
+    }
+    held_directions = isPressed ? [direction] : [];
+
+    if (isPressed) {
+      removePressedAll();
+      console.log(`mouse is down on .dpad-${direction}`);
+      document.querySelector(".dpad-" + direction).classList.add("pressed");
+    }
+  };
+
+
   return (
     <div>
       <div class="frame">
@@ -11,22 +142,39 @@ function Explorer(props) {
         <div class="corner_bottomright"></div>
 
         <div class="camera">
-          <div class="map pixel-art">
+          <div
+            style={{
+              transform: mapTransform,
+            }}
+            class="map pixel-art"
+          >
             <div
-              style={{ background: `url(${props.avatar}) no- repeat no-repeat` }}
-              class="game_character" facing="down" walking="true">
+              style={{
+                transform: charTransform,
+                background: `url(${props.avatar}) no- repeat no-repeat`,
+              }}
+              class="game_character"
+              facing={held_direction}
+              walking={held_direction ? "true" : "false"}
+            >
               <div class="shadow pixel-art"></div>
-              <div style={{
-                position: "absolute",
-                background: `url(${props.avatar}) no-repeat no-repeat`,
-                backgroundSize: "100%"
-              }} class="game_character_spritesheet pixel-art"></div>
+              <div
+                style={{
+                  position: "absolute",
+                  background: `url(${props.avatar}) no-repeat no-repeat`,
+                  backgroundSize: "100%",
+                }}
+                class="game_character_spritesheet pixel-art"
+              ></div>
             </div>
           </div>
 
           <div class="dpad">
             <div class="DemoDirectionUI flex-center">
-              <button class="dpad-button dpad-left">
+              <button
+                onMouseDown={(e) => handleDpadPress(directions.left, true)}
+                class="dpad-button dpad-left"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -0.5 13 13"
@@ -65,7 +213,10 @@ function Explorer(props) {
                   />
                 </svg>
               </button>
-              <button class="dpad-button dpad-up">
+              <button
+                onMouseDown={(e) => handleDpadPress(directions.up, true)}
+                class="dpad-button dpad-up"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -0.5 13 13"
@@ -104,7 +255,10 @@ function Explorer(props) {
                   />
                 </svg>
               </button>
-              <button class="dpad-button dpad-down">
+              <button
+                onMouseDown={(e) => handleDpadPress(directions.down, true)}
+                class="dpad-button dpad-down"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -0.5 13 13"
@@ -139,7 +293,10 @@ function Explorer(props) {
                   />
                 </svg>
               </button>
-              <button class="dpad-button dpad-right">
+              <button
+                onMouseDown={(e) => handleDpadPress(directions.right, true)}
+                class="dpad-button dpad-right"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -0.5 13 13"

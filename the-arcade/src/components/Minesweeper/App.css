@@ -1,55 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
 
 .App {
-  font-family: 'VT323', monospace;
-}
-
-.home {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background: url("./images/rainbowPixels.gif");
-}
-
-.homeTitle {
-  animation: growShrink 1s ease-in-out infinite alternate;
-  -webkit-animation: growShrink 1s ease-in-out infinite alternate;
-  -moz-animation: growShrink 1s ease-in-out infinite alternate;
-}
-
-@keyframes growShrink {
-  from {
-    width: 60vw;
-  }
-  to {
-    width: 80vw;
-  }
-}
-
-.chooseAvatar {
-  border: 2px solid black;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  padding-bottom: 35px;
-  margin: 10px;
-  height: 100px;
-  background: white;
-}
-
-.chooseAvatar:hover {
-  border: 2px solid white;
-  background:black;
-}
-
-@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
-
-.MineApp {
   text-align: center;
-  background: url("./components/Minesweeper/images/flashingStar.gif");
+  background: url("./images/flashingStar.gif");
   font-family: 'VT323', monospace;
 }
 

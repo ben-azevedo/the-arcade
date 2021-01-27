@@ -45,7 +45,7 @@ function AvatarMenu(props) {
           margin: "3vh",
         }}
       >
-        Choose your Avatar:
+        Select your Avatar:
       </div>
       <div
         style={{

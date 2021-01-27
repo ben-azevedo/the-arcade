@@ -55,8 +55,8 @@ body {
   image-rendering: pixelated;
   background-image: url("../images/practiceMap.png");
   background-size: 100%;
-  width: calc(13 * var(--grid-cell));
-  height: calc(37.7 * var(--grid-cell));
+  width: calc(16 * var(--grid-cell));
+  height: calc(30 * var(--grid-cell));
   position: relative;
 }
 

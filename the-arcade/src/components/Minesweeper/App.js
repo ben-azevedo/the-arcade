@@ -1,25 +1,20 @@
+import Map from "./components/Map.js";
+import Leaderboard from "./components/Leaderboard.js";
+import titlePic from "./images/minesweeperTitle.png";
+import startButton from "./images/startButton.png";
+import leaderboardButton from "./images/leaderboardButton.png";
 import { Link, Route } from "react-router-dom";
-import { useEffect, useState } from "react"; 
-import { baseURL, config } from "./components/Minesweeper/services";
+import { useState, useEffect } from "react";
 import axios from "axios";
-
-import Home from "./components/Home.js";
-import AvatarMenu from "./components/AvatarMenu.js";
-import Explorer from "./components/Explorer.js";
-
-import Map from "./components/Minesweeper/components/Map.js";
-import Leaderboard from "./components/Minesweeper/components/Leaderboard.js";
-
-import titlePic from "./components/Minesweeper/images/minesweeperTitle.png";
-import startButton from "./components/Minesweeper/images/startButton.png";
-import leaderboardButton from "./components/Minesweeper/images/leaderboardButton.png";
-
+import { baseURL, config } from "./services";
 import "./App.css";
 
-function App() {
-  const [avatar, setAvatar] = useState("grayscaleAvatar.png")
-  console.log(avatar);
+// Original Minesweeper Difficulty Levels
+// Beginner: 9x9 w/ 10 mines
+// Intermediate: 16x16 w/ 40 mines
+// Expert: 16x30 w/ 99 mines
 
+function App() {
   const [entries, setEntries] = useState([]);
   const [toggleFetch, setToggleFetch] = useState(false);
   
@@ -76,16 +71,7 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Route exact path="/">
-        <Home />
-      </Route>
-      <Route path="/avatar_menu">
-        <AvatarMenu setAvatar={setAvatar}/>
-      </Route>
-      <Route path="/explorer">
-        <Explorer avatar={avatar}/>
-      </Route>
+    <div className="MineApp">
       <Route exact path="/minesweeper">
         <div style={style.page}>
           <img style={style.title} src={titlePic} />
@@ -111,3 +97,13 @@ function App() {
 }
 
 export default App;
+
+// TO MAKE MODAL WORK CORRECTLY
+// for the three states of gameplay
+// 1. regular
+// 2. gameover
+// 3. winningForm
+// set them as a boolean where the three states are
+// 1. null
+// 2. false
+// 3. true

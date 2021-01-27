@@ -1,78 +1,27 @@
 import "./Explorer.css";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function Explorer(props) {
   console.log(props.avatar);
-  // const [x, setX] = useState(88);
-  // const [y, setY] = useState(297);
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(30);
+  const [heldDirection, setHeldDirection] = useState(""); //State of which arrow keys we are holding down
+
+  let isKeyDown = false;
 
   //start in the middle of the map
   let pixelSize = 4;
+  let minesweeper = false;
   const camera_left = pixelSize * 48;
   const camera_top = pixelSize * 42;
-  let x = 88;
-  let y = 297;
-  let held_directions = []; //State of which arrow keys we are holding down
+  // let x = 88;
+  // let y = 60;
+  // let held_directions = []; //State of which arrow keys we are holding down
   let speed = 1; //How fast the character moves in pixels per frame
-  let held_direction = held_directions[0];
+  // let held_direction = held_directions[0];
   let mapTransform = "translate3d(0px,0,0)";
   let charTransform = "transform: translate3d(0px,0,0)";
-
-  const placeCharacter = () => {
-    pixelSize = parseInt(
-      getComputedStyle(document.documentElement).getPropertyValue(
-        "--pixel-size"
-      )
-    );
-    held_direction = held_directions[0];
-    if (held_direction) {
-      if (held_direction === directions.right) {
-        x += speed;
-      }
-      if (held_direction === directions.left) {
-        x -= speed;
-      }
-      if (held_direction === directions.down) {
-        y += speed;
-      }
-      if (held_direction === directions.up) {
-        y -= speed;
-      }
-    }
-
-    var leftLimit = 44;
-    var rightLimit = 132;
-    var topLimit = 17;
-    var bottomLimit = 300;
-    if (x < leftLimit) {
-      x = leftLimit;
-    }
-    if (x > rightLimit) {
-      x = rightLimit;
-    }
-    if (y < topLimit) {
-      y = topLimit;
-    }
-    if (y > bottomLimit) {
-      y = bottomLimit;
-    }
-    if (x === 88 && y === 60) {
-      doTheThing
-    }
-    console.log(`x:${x} y:${y}`)
-    mapTransform = `translate3d( ${-x * pixelSize + camera_left}px, ${-y * pixelSize + camera_top
-    }px, 0 )`;
-    charTransform = `translate3d( ${x * pixelSize}px, ${y * pixelSize}px, 0 )`;
-  };
-
-  //Set up the game loop
-  const step = () => {
-    placeCharacter();
-    window.requestAnimationFrame(() => {
-      step();
-    });
-  };
-  step(); //kick off the first step!
 
   const directions = {
     up: "up",
@@ -87,22 +36,77 @@ function Explorer(props) {
     40: directions.down,
   };
 
+  const placeCharacter = () => {
+    pixelSize = parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--pixel-size"
+      )
+    );
+
+    if (heldDirection) {
+      if (heldDirection === directions.right) {
+        setX(x + speed);
+      }
+      if (heldDirection === directions.left) {
+        setX(x - speed);
+      }
+      if (heldDirection === directions.down) {
+        setY(y + speed);
+      }
+      if (heldDirection === directions.up) {
+        setY(y - speed);
+      }
+    }
+
+    const leftLimit = 57;
+    const rightLimit = 132;
+    const topLimit = 29;
+    const bottomLimit = 300;
+    if (x < leftLimit) {
+      setX(leftLimit);
+    }
+    if (x > rightLimit) {
+      setX(rightLimit);
+    }
+    if (y < topLimit) {
+      setY(topLimit);
+    }
+    if (y > bottomLimit) {
+      setY(bottomLimit);
+    }
+    if (x === 88 && y === 60) {
+      minesweeper = true;
+    } else {
+      minesweeper = false;
+    }
+    // console.log(minesweeper)
+    // console.log(`x:${x} y:${y}`)
+    mapTransform = `translate3d( ${-x * pixelSize + camera_left}px, ${-y * pixelSize + camera_top
+    }px, 0 )`;
+    charTransform = `translate3d( ${x * pixelSize}px, ${y * pixelSize}px, 0 )`;
+  };
+
+  //Set up the game loop
+  const step = () => {
+    placeCharacter();
+    window.requestAnimationFrame(() => {
+      step();
+    });
+  };
+  step(); //kick off the first step!
+
   document.addEventListener("keydown", (e) => {
-    var dir = keys[e.which];
-    if (dir && held_directions.indexOf(dir) === -1) {
-      held_directions.unshift(dir);
+    console.log(keys[e.which])
+    if (heldDirection !== keys[e.which]) {
+      setHeldDirection(keys[e.which]);
     }
   });
 
   document.addEventListener("keyup", (e) => {
-    var dir = keys[e.which];
-    var index = held_directions.indexOf(dir);
-    if (index > -1) {
-      held_directions.splice(index, 1);
-    }
+    setHeldDirection("");
   });
 
-  var isPressed = false;
+  let isPressed = false;
   const removePressedAll = () => {
     document.querySelectorAll(".dpad-button").forEach((d) => {
       d.classList.remove("pressed");
@@ -115,7 +119,8 @@ function Explorer(props) {
   document.body.addEventListener("mouseup", () => {
     console.log("mouse is up");
     isPressed = false;
-    held_directions = [];
+    // held_directions = [];
+    setHeldDirection("");
     removePressedAll();
   });
 
@@ -123,7 +128,11 @@ function Explorer(props) {
     if (click) {
       isPressed = true;
     }
-    held_directions = isPressed ? [direction] : [];
+    if (isPressed) {
+      setHeldDirection(direction);
+    } else {
+      setHeldDirection("");
+    }
 
     if (isPressed) {
       removePressedAll();
@@ -135,6 +144,7 @@ function Explorer(props) {
 
   return (
     <div>
+      {(true) ? <Link to="/minesweeper"><div style={{ color: "white", zIndex: "3", fontSize: "20px", padding: "5px"}}>Play Minesweeper?</div></Link> : <div></div>}
       <div class="frame">
         <div class="corner_topleft"></div>
         <div class="corner_topright"></div>
@@ -154,8 +164,8 @@ function Explorer(props) {
                 background: `url(${props.avatar}) no- repeat no-repeat`,
               }}
               class="game_character"
-              facing={held_direction}
-              walking={held_direction ? "true" : "false"}
+              facing={heldDirection}
+              walking={heldDirection ? "true" : "false"}
             >
               <div class="shadow pixel-art"></div>
               <div

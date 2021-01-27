@@ -1,22 +1,31 @@
 # The Arcade
 
+Link: https://agitated-edison-3dff49.netlify.app/
+
 ## Project Description
 
 The Arcade is an Airtable and React build, RPG environment where the user is able to engage in a number of retro-styled arcade games. From the homepage, the user is able to navigate through a top-down-view 2D world where all life is based around, you guessed it, ARCARDE! By reaching particular checkpoints on the map, users are able to interact with a number of classic arcade games including Minesweeper, Pong, and many more. Leaderboards are posted and updated (and even have editing functionality). Play to win. Good luck!
 
 ## Wireframes
 
-The wireframes below depict the homepage and review feed for What-cha-Think in web, tablet and phone format. The homepage contains a header displaying the app title and three clickable icons - movies, television and sports - that route to each respective review feed. The review feeds contain an input form and submit button for review data. Below the form is a feed of all past forms, along with a delete button for each post. The screens will center as screen size decreases.
+The wireframe below depicts the homepage and leaderboard for Minesweeper in web format. The homepage contains a timer keeping track of the users progress, and the game board containing an array of clickable cells, with each reavealing more of the hidden game board. The leaderboard button in the top right-hand corner routes to the leaderboard page which tabulates username, ranking, and user time. The edit button on the lower right-hand corner of that page allows for the user to edit the name of their posted scores.
 
-![imageAlt](https://i.imgur.com/IX2UVl9.png)
+![imageAlt](https://i.ibb.co/RYFCPSB/Screen-Shot-2021-01-20-at-2-47-58-AM.png)
+<!--
+    https://wireframe.cc/ut5FUe
+-->
+![imageAlt](https://i.ibb.co/bNYH4rQ/Screen-Shot-2021-01-20-at-3-01-46-AM.png)
 
 ## Component Hierarchy
 
-![imageAlt](https://i.imgur.com/PhRA82l.png)
+![imageAlt](https://i.ibb.co/R2800bM/Screen-Shot-2021-01-20-at-3-14-12-AM.png)
+<!--
+    https://wireframe.cc/6OEh1y
+-->
 
 ## API and Data Sample
 
-https://airtable.com/shrTv92TftYf4SVZZ
+https://airtable.com/tblSWWslEIgCor7aj/viwTMcThgq096TUMO?blocks=hide
 
 Airtable is returning the data for this base as follows:
 
@@ -24,93 +33,94 @@ Airtable is returning the data for this base as follows:
 {
     "records": [
         {
-            "id": "recjruUyWVhOO6mJP",
+            "id": "recCLDT6v38PtnfIw",
             "fields": {
-                "title": "The Godfather",
-                "rating": 5,
-                "opinion": "A classic cinematic theme executed perfectly. The acting, spearheaded by Marlon Brando, made the story memorable. "
+                "rank": "Abrasive Antwon",
+                "time": 30
             },
-            "createdTime": "2020-10-09T00:27:04.000Z"
+            "createdTime": "2021-01-20T09:42:16.000Z"
         },
         {
-            "id": "rec85tP6Ra4a3JiKL",
+            "id": "recnVoFPhy3cATBkt",
             "fields": {
-                "title": "Independence Day",
-                "rating": 3,
-                "opinion": "This movie was not very good in terms of cinematic quality, however it smells of nostalgia which I can't help but enjoy every July 4th. "
+                "rank": "Bashful Bethany",
+                "time": 35
             },
-            "createdTime": "2020-10-09T00:27:04.000Z"
+            "createdTime": "2021-01-20T09:42:16.000Z"
+        },
+        {
+            "id": "recWTHN0kQg5l7VWj",
+            "fields": {
+                "rank": "Crazy Coraline",
+                "time": 40
+            },
+            "createdTime": "2021-01-20T09:42:16.000Z"
         }
     ],
-    "offset": "rec85tP6Ra4a3JiKL"
+    "offset": "recWTHN0kQg5l7VWj"
 }
 
 ```
+
+Each entry contains the user's name, and their time in seconds. Ranks on the leaderboard will be assigned on the React App.
 
 ### MVP/PostMVP
 
 #### MVP
 
-- Home page with clickable icons that route to each respective feed.
-- Get and post film reviews from Airtable.
-- Use forms to create reviews and update Airtable.
-- Delete posts from the feed and airtable.
+- Game board with clickable cells that uncover and accurately hint at the number of neighboring 'mines'.
+- A timer that tracks the users progress.
+- Post successful minesweeper scores to the leaderboard and on Airtable.
 
 #### PostMVP
 
-- Collaborate with a UX student to make the UI more attractive/user-friendly.
-- Get and post TV and sports reviews in separate routed icon links.
-- Add a search bar to each review page to find reviews via keywords in the title.
+- Improve UX with animations and advanced CSS
+- Use forms to edit only the name of leaderboard posts that the user is responsible and update Airtable.
+- Allow user to choose difficulty level (board size and number of "mines")
+- Add difficulty-level field to Airtable and create algorithm to give user scores based on time and difficulty level
 
 ## Project Schedule
 
-| Day      | Deliverable                                | Status   |
-| -------- | ------------------------------------------ | -------- |
-| Oct 9-11 | Proposal Approval / Airtable Setup         | Complete |
-| Oct 12   | Component Creation / Get, Set, Delete Data | Complete |
-| Oct 13   | Oct. 12 cont'd / CSS Components            | Complete |
-| Oct 14   | CSS Components cont'd / MVP                | Complete |
-| Oct 15   | Advanced CSS                               | Complete |
-| Oct 16   | Presentations                              | Complete |
+| Day    | Deliverable                                | Status     |
+| ------ | ------------------------------------------ | ---------- |
+| Jan 20 | Proposal Approval / Airtable Setup         | Complete   |
+| Jan 20 | Component Creation / Get, Set, Edit Data   | Complete   |
+| Jan 21 | Cell Revealing / Timer                     | Complete   |
+| Jan 22 | Jan 21 cont'd / Post Scores to Leaderboard | Complete   |
+| Jan 23 | Advanced CSS                               | Complete   |
+| Jan 25 | Deployment                                 | Complete   |
+| Jan 27 | Presentations                              | Incomplete |
 
 ## Timeframes
 
-| Component                 | Priority | Estimated Time | Time Invested | Actual Time |
-| ------------------------- | :------: | :------------: | :-----------: | :---------: |
-| Proposal                  |    H     |      2hrs      |     2hrs      |    2hrs     |
-| Airtable setup            |    H     |     .5hrs      |      1hr      |     1hr     |
-| Clickable icons           |    H     |      1hrs      |      1hr      |     1hr     |
-| Data population pg 1      |    H     |      3hrs      |     3hrs      |    3hrs     |
-| Data population pg 2      |    H     |      3hrs      |     2hrs      |    2hrs     |
-| Data population pg 3      |    H     |      3hrs      |     2hrs      |    2hrs     |
-| Form creation pg 1        |    H     |      2hrs      |     2hrs      |    2hrs     |
-| Form creation pg 2        |    H     |      2hrs      |     1 hr      |    1 hr     |
-| Form creation pg 3        |    H     |      2hrs      |     1 hr      |     1hr     |
-| Data creation/update pg 1 |    H     |      3hrs      |     3hrs      |    3hrs     |
-| Data creation/update pg 2 |    H     |      3hrs      |      1hr      |     1hr     |
-| Data creation/update pg 3 |    H     |      3hrs      |      1hr      |     1hr     |
-| Data deletion pg 1        |    H     |      2hrs      |      1hr      |     1hr     |
-| Data deletion pg 2        |    H     |      2hrs      |      1hr      |     1hr     |
-| Data deletion pg 3        |    H     |      2hrs      |      1hr      |     1hr     |
-| Component CSS pg 1        |    H     |      3hrs      |     4hrs      |    4hrs     |
-| Component CSS pg 2        |    H     |      3hrs      |     4hrs      |    4hrs     |
-| Component CSS pg 3        |    H     |      3hrs      |     4hrs      |    4hrs     |
-| Total                     |    H     |    42.5hrs     |     35hrs     |    35hrs    |
+| Component                 | Priority | Estimated Time | Time Invested |
+| ------------------------- | :------: | :------------: | :-----------: |
+| Proposal                  |    H     |      3hrs      |     4hrs      |
+| Airtable setup            |    H     |     .5hrs      |     1hr       |
+| Game Board                |    H     |      1hr       |     8hrs      |
+| Cells                     |    H     |      3hrs      |     0.5hrs    |
+| Timer                     |    H     |      2hrs      |     4hrs      |
+| Game Play                 |    H     |      6hrs      |     5hrs      |
+| Leaderboard               |    H     |     .5hrs      |     5hrs      |
+| Posting to Leaderboard    |    H     |      4hrs      |     2hrs      |
+| Play Again?               |    H     |      2hrs      |     6hrs      |
+| Advanced CSS              |    H     |      5hrs      |     5hrs      |
+| Total                     |    n/a   |     29hrs      |     36.5hrs   |
 
 ## SWOT Analysis
 
 ### Strengths:
 
-I have a good understanding of what i want my application to look like and what exactly I want it to do. As such, I can better plan for what needs to be done and how long it will take. I also know which labs and excercise I can reference if I get lost along the way.
+As far as functionality and UX design go I know exactly what I want. I can circumvent the hours of brainstorming required for both of those tasks, and will better spend my effort carefully planning the logic of game-play.
 
 ### Weaknesses:
 
-I am still not terribly clear on CRUD and how to make sure I can carry each aspect out for this project. Additionally, I prefer to stick to functional components but given the parameters of the project, I'll need to use class components, as well. I will likely use most of my research time/manager help on these matters.
+Especially in the realm of game-play I recognize the lack of detail in my plan. A majority of class exercises dealt with the basics of React and GET/POST/PUT/DELETE requests, so outside resources and careful planning will guide me towards MVP.  My component hierarchy is a solid foundation.
 
 ### Opportunities:
 
-This project is the culmination of the last 2 weeks and will give me an opportunity to solidify my understanding of react. I also happen to be interested in the function of my app given my interests, so I am motivated to make it look usable and attractive.
+I am extremely excited at the prospect of pushing my base knowledge of React to the limits. Getting, Posting, Putting, and Deleting from API's is extremely important in business application, and I see no better way to showcase my understanding of those concepts than in an interactive project that I am passionate about.
 
 ### Threats:
 
-Whenever I get stuck with an error or an issue, I tend to go down a rabbit hole of online searches and debugging. Often times, I don't timebox these episodes and lose a lot of time. While this is typically a favorable characteristic in a developer, I'll need to make sure I know when to ask for help.
+The two largest challenges I anticipate are updating the leaderboard (so that rankings are re-assigned and displayed in order), and dealing with gameplay (the revealing of hidden cells).

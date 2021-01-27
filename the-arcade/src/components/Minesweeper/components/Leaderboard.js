@@ -124,6 +124,7 @@ function Leaderboard(props) {
           class="glowTitles"
           style={{
             display: "flex",
+            justifyContent: "center",
             flexDirection: "row",
             fontStyle: "bold",
             fontSize: label,

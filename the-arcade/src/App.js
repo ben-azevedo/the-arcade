@@ -1,5 +1,5 @@
 import { Link, Route } from "react-router-dom";
-import { useEffect, useState } from "react"; 
+import { useEffect, useState } from "react";
 import { baseURL, config } from "./components/Minesweeper/services";
 import axios from "axios";
 
@@ -17,12 +17,12 @@ import leaderboardButton from "./components/Minesweeper/images/leaderboardButton
 import "./App.css";
 
 function App() {
-  const [avatar, setAvatar] = useState("grayscaleAvatar.png")
+  const [avatar, setAvatar] = useState("grayscaleAvatar.png");
   console.log(avatar);
 
   const [entries, setEntries] = useState([]);
   const [toggleFetch, setToggleFetch] = useState(false);
-  
+
   function score(time, difficulty) {
     return Math.ceil(difficulty * (1000 - time));
   }
@@ -52,7 +52,7 @@ function App() {
       alignItems: "center",
       flexDirection: "column",
       height: "100vh",
-      width: "100vw"
+      width: "100vw",
     },
     title: {
       width: "90vw",
@@ -72,8 +72,8 @@ function App() {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-    }
-  }
+    },
+  };
 
   return (
     <div className="App">
@@ -81,31 +81,30 @@ function App() {
         <Home />
       </Route>
       <Route path="/avatar_menu">
-        <AvatarMenu setAvatar={setAvatar}/>
+        <AvatarMenu setAvatar={setAvatar} />
       </Route>
       <Route path="/explorer">
-        <Explorer avatar={avatar}/>
+        <Explorer avatar={avatar} />
       </Route>
-      <Route exact path="/minesweeper">
-        <div style={style.page}>
-          <img style={style.title} src={titlePic} />
-          <Link to="/minesweeper_game">
-            <img style={style.start} src={startButton}/>
-          </Link>
-          <Link to="/leaderboard">
-            <img style={style.leaderboard} src={leaderboardButton}/>
-          </Link>
-        </div>
-      </Route>
-      <Route path="/minesweeper_game">
-        <Map
-          setToggleFetch={setToggleFetch}/>
-      </Route>
-      <Route path="/leaderboard">
-        <Leaderboard
-          entries={entries}
-        />
-      </Route>
+      <div className="MineApp">
+        <Route exact path="/minesweeper">
+          <div style={style.page}>
+            <img style={style.title} src={titlePic} />
+            <Link to="/minesweeper_game">
+              <img style={style.start} src={startButton} />
+            </Link>
+            <Link to="/leaderboard">
+              <img style={style.leaderboard} src={leaderboardButton} />
+            </Link>
+          </div>
+        </Route>
+        <Route path="/minesweeper_game">
+          <Map setToggleFetch={setToggleFetch} />
+        </Route>
+        <Route path="/leaderboard">
+          <Leaderboard entries={entries} />
+        </Route>
+      </div>
     </div>
   );
 }

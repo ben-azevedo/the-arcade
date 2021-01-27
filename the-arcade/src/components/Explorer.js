@@ -7,6 +7,7 @@ function Explorer(props) {
   const [x, setX] = useState(0);
   const [y, setY] = useState(30);
   const [heldDirection, setHeldDirection] = useState(""); //State of which arrow keys we are holding down
+  const [isPressed, setIsPressed] = useState(false);
 
   let isKeyDown = false;
 
@@ -95,38 +96,60 @@ function Explorer(props) {
   };
   step(); //kick off the first step!
 
-  document.addEventListener("keydown", (e) => {
-    console.log(keys[e.which])
-    if (heldDirection !== keys[e.which]) {
-      setHeldDirection(keys[e.which]);
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      console.log(keys[e.which])
+      if (heldDirection !== keys[e.which]) {
+        setHeldDirection(keys[e.which]);
+      }
+    });
+    document.addEventListener("keyup", (e) => {
+      setHeldDirection("");
+    });
+    document.body.addEventListener("mousedown", () => {
+      console.log(`mouse is down`);
+      setIsPressed(true);
+    });
+    document.body.addEventListener("mouseup", () => {
+      console.log("mouse is up");
+      setIsPressed(false);
+      // held_directions = [];
+      setHeldDirection("");
+      removePressedAll();
+    });
+    return () => {
+      document.removeEventListener("keydown", (e) => {
+        console.log(keys[e.which])
+        if (heldDirection !== keys[e.which]) {
+          setHeldDirection(keys[e.which]);
+        }
+      });
+      document.removeEventListener("keyup", (e) => {
+        setHeldDirection("");
+      });
+      document.body.removeEventListener("mousedown", () => {
+        console.log(`mouse is down`);
+        setIsPressed(true);
+      });
+      document.body.removeEventListener("mouseup", () => {
+        console.log("mouse is up");
+        setIsPressed(false);
+        // held_directions = [];
+        setHeldDirection("");
+        removePressedAll();
+      });
     }
-  });
+  }, []);
 
-  document.addEventListener("keyup", (e) => {
-    setHeldDirection("");
-  });
-
-  let isPressed = false;
   const removePressedAll = () => {
     document.querySelectorAll(".dpad-button").forEach((d) => {
       d.classList.remove("pressed");
     });
   };
-  document.body.addEventListener("mousedown", () => {
-    console.log(`mouse is down`);
-    isPressed = true;
-  });
-  document.body.addEventListener("mouseup", () => {
-    console.log("mouse is up");
-    isPressed = false;
-    // held_directions = [];
-    setHeldDirection("");
-    removePressedAll();
-  });
 
   const handleDpadPress = (direction, click) => {
     if (click) {
-      isPressed = true;
+      setIsPressed(true);
     }
     if (isPressed) {
       setHeldDirection(direction);

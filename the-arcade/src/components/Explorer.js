@@ -5,11 +5,9 @@ import { useState, useEffect } from "react";
 function Explorer(props) {
   console.log(props.avatar);
   const [x, setX] = useState(0);
-  const [y, setY] = useState(30);
+  const [y, setY] = useState(0);
   const [heldDirection, setHeldDirection] = useState(""); //State of which arrow keys we are holding down
   const [isPressed, setIsPressed] = useState(false);
-
-  let isKeyDown = false;
 
   //start in the middle of the map
   let pixelSize = 4;
@@ -59,9 +57,9 @@ function Explorer(props) {
       }
     }
 
-    const leftLimit = 57;
-    const rightLimit = 132;
-    const topLimit = 29;
+    const leftLimit = 0;
+    const rightLimit = 200;
+    const topLimit = 0;
     const bottomLimit = 300;
     if (x < leftLimit) {
       setX(leftLimit);
@@ -80,8 +78,8 @@ function Explorer(props) {
     } else {
       minesweeper = false;
     }
-    // console.log(minesweeper)
-    // console.log(`x:${x} y:${y}`)
+    console.log(minesweeper)
+    console.log(`x:${x} y:${y}`)
     mapTransform = `translate3d( ${-x * pixelSize + camera_left}px, ${-y * pixelSize + camera_top
     }px, 0 )`;
     charTransform = `translate3d( ${x * pixelSize}px, ${y * pixelSize}px, 0 )`;
@@ -94,9 +92,9 @@ function Explorer(props) {
       step();
     });
   };
-  step(); //kick off the first step!
 
   useEffect(() => {
+    step(); //kick off the first step!
     document.addEventListener("keydown", (e) => {
       console.log(keys[e.which])
       if (heldDirection !== keys[e.which]) {
